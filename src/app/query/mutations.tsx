@@ -105,14 +105,12 @@ const completeTodo = (id: string, completed: boolean) => fetch(API_URL+'complete
 //IMAGE UPLOAD
 
 export const ImageUploadMutation = () =>{
-  const router = useRouter()
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({id,mime,image} : {id: string, mime : string,image: string})=>imageUpload(id,mime,image),
     onSuccess: ()=>{
       queryClient.invalidateQueries({queryKey: ['todo']})
-      // router.push('/todo/')
     }
   })
 }
