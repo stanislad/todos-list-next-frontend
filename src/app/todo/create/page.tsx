@@ -15,6 +15,7 @@ export default function Page () {
     const emptyTodo : Todos = {
         id: "",
         todo: "",
+        description: "",
         imageUrl: "",
         createdAt: "",
         completed: false,
