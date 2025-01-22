@@ -15,7 +15,7 @@ interface Props{
 
 export const Form = (params: Props) => {
     const [name, setName] = useState<string>(params.todo.todo)
-    const [description, setDescription] = useState<string>('describe...')
+    const [description, setDescription] = useState<string>(params.todo.description)
     const {mutate : imageUploadMutation} = ImageUploadMutation()
 
     const router = useRouter();

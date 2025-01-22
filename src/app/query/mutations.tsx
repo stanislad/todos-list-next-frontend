@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
     const queryClient = useQueryClient();
 
     return useMutation({
-      mutationFn: ({id, name} : {id : string, name: string})=>updateTodo(id, name),
+      mutationFn: ({id, name, description} : {id : string, name: string, description: string})=>updateTodo(id, name, description),
       onSuccess: ()=>{
         queryClient.invalidateQueries({queryKey: ['todos']})
         queryClient.invalidateQueries({queryKey: ['todo']})
@@ -23,9 +23,9 @@ import { useRouter } from 'next/navigation';
     })
   }
 
-export const updateTodo = (id : string, name: string) => fetch(API_URL+'update/'+id, {
+export const updateTodo = (id : string, name: string, description: string) => fetch(API_URL+'update/'+id, {
     mode: 'cors',
-    body: JSON.stringify({todo: name}),
+    body: JSON.stringify({todo: name, description}),
     headers: {
         'Content-Type': 'application/json'
     },
@@ -39,7 +39,7 @@ export const CreateMutation = () =>{
     const queryClient = useQueryClient();
 
     return useMutation({
-      mutationFn: ({name} : {name: string})=>createTodo(name),
+      mutationFn: ({name, description} : {name: string, description: string})=>createTodo(name, description),
       onSuccess: ()=>{
         queryClient.invalidateQueries({queryKey: ['todos']})
         router.push('/todo/')
@@ -47,9 +47,9 @@ export const CreateMutation = () =>{
     })
   }
 
-const createTodo = (name: string) => fetch(API_URL+'create/', {
+const createTodo = (name: string, description: string) => fetch(API_URL+'create/', {
     mode: 'cors',
-    body: JSON.stringify({todo: name}),
+    body: JSON.stringify({todo: name, description}),
     headers: {
         'Content-Type': 'application/json'
     },

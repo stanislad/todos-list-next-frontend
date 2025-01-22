@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation"
-import type {Todos} from '../types/types'
+import type {Todos} from '../../types/types'
 import { convertDate } from "@/app/helper/dateConvert";
 import { Checkbox } from "@/app/components/Checkbox";
 
@@ -29,7 +29,7 @@ export const List = (children : Props) =>{
                 } className="size-16 flex-none rounded-full bg-gray-50" />
                 <div className="min-w-0 flex-auto pt-2">
                     <p className="text-sm/12 font-semibold text-gray-900">{item.todo}</p>
-                    <p className="mt-1 truncate text-xs/5 text-gray-500">{item.completed ? 'Completed': 'Not Completed'}</p>
+                    <p className="mt-1 truncate text-xs/5 text-gray-500">{item.description}</p>
                 </div>
             </div>
             

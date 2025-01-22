@@ -1,6 +1,6 @@
 'use client'
 
-import { List } from "@/components/list"
+import { List } from "@/app/components/list"
 import { Todos } from "@/types/types"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"

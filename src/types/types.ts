@@ -3,5 +3,6 @@ export interface Todos {
     todo: string,
     createdAt : string,
     completed : boolean,
+    description : string,
     imageUrl : string
 }

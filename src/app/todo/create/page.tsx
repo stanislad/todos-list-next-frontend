@@ -5,11 +5,11 @@ import { CreateMutation } from "@/app/query/mutations"
 import { Todos } from "@/types/types"
 
 export default function Page () {
-    const {mutate} = CreateMutation()
+    const {mutate: createMutation} = CreateMutation()
 
 
-    const saveTodo = (name: string) => {
-        mutate({name})
+    const saveTodo = (name: string, description: string) => {
+        createMutation({name, description})
     }
 
     const emptyTodo : Todos = {
