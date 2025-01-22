@@ -10,7 +10,7 @@ export const Checkbox = (props  : Props) => {
     const [check, setCheck] = useState(props.completed)
     const {mutate : completeMutation} = CompleteMutation()
 
-    const click = (e: Event) => {
+    const click = (e: any) => {
         e.stopPropagation()
         const newVal = !check
         setCheck(newVal)

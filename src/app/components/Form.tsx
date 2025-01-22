@@ -4,7 +4,6 @@ import { Todos } from "@/types/types";
 import { useRouter } from "next/navigation"
 import { useState } from "react";
 import { ImageUploadMutation } from "../query/mutations";
-import Image from "next/image";
 
 interface Props{
   todo: Todos
@@ -22,7 +21,7 @@ export const Form = (params: Props) => {
     const router = useRouter();
 
 
-    function handleChange(e) {
+    function handleChange(e: any) {
       const selectedFile = e.target.files[0]; // Get the selected file
       if (selectedFile) {
         const reader = new FileReader();
@@ -41,12 +40,12 @@ export const Form = (params: Props) => {
       imageUploadMutation({id: params.todo.id, mime,image})
     }
 
-    const callback = (e: Event) => {
+    const callback = (e: any) => {
         e.preventDefault()
         params.callback(name, description)
     }
 
-    const callbackDelete = (e: Event) => {
+    const callbackDelete = (e: any) => {
       e.preventDefault()
       if(params.callbackDelete) params.callbackDelete()
     }
