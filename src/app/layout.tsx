@@ -25,11 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-r from-violet-200 to-pink-200`}
       >
         <Providers>
-          <div className="lg:flex lg:items-center lg:justify-between p-10">
+          <div className="lg:flex lg:items-center lg:justify-between p-5 md:p-10">
             <div className="min-w-0 flex-1">
               {children}
             </div>  

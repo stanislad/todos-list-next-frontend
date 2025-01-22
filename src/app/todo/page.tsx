@@ -25,9 +25,7 @@ export default function Page () {
     return (
         <div>
             <h2 className="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Todo List Items:</h2>
-            <div className="float-right">
-                <Button buttonText="Create Todo" callback={click}></Button>
-            </div>
+                <Button buttonText="Create Todo" callback={click} position="float-right mt-6 md:mt-4"></Button>
             <List items={results as Todos[]}></List>
         </div>
     )

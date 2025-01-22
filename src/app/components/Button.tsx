@@ -3,17 +3,18 @@
 
 interface Props{
     buttonText: string
+    position?: string
     callback: () => void
 }
 
 export const Button = (children : Props) =>{
 
     return (
-        <span className="hidden sm:block">
+        <span>
             <button
                 onClick={children.callback}
                 type="button"
-                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                className={`${children.position ?? 'inline-flex items-center'} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
             >
                 {children.buttonText}
             </button>
