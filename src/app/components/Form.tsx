@@ -16,8 +16,8 @@ interface Props{
 export const Form = (params: Props) => {
     const [name, setName] = useState<string>(params.todo.todo)
     const [description, setDescription] = useState<string>(params.todo.description)
+    const [date, setDate] = useState<string>(new Date().toISOString().substring(0,16))
     const {mutate : imageUploadMutation} = ImageUploadMutation()
-
     const router = useRouter();
 
 
@@ -67,7 +67,7 @@ export const Form = (params: Props) => {
     const deleteButton = () =>{
       if(params.editMode)
         return (
-          <button onClick={e=>callbackDelete(e)} type="button" className="text-sm/6 font-semibold text-red-600 pt-6 pl-3">
+          <button onClick={e=>callbackDelete(e)} type="button" className="text-sm/6 font-semibold text-red-600">
             Delete
           </button>
         )
@@ -125,13 +125,24 @@ export const Form = (params: Props) => {
               </div>
               {renderImage()}
               {uploadImageButton()}
-              {deleteButton()}
+              <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 pt-6">
+                Date:
+              </label>
+              <div className="mt-2">
+                <input
+                  type="datetime-local"
+                  value={date}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  onChange={e=>setDate(e.target.value)}
+                />
+              </div>        
             </div>
           </div>
-          
         </div>
         </div>
-        <div className="mt-6 flex items-center justify-end gap-x-6">
+        
+        <div className="mt-6 flex items-center justify-between gap-x-8">
+        {deleteButton()}
         <button onClick={()=>router.back()} type="button" className="text-sm/6 font-semibold text-gray-900">
           Cancel
         </button>
