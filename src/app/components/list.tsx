@@ -14,7 +14,7 @@ export const List = (children : Props) =>{
     const [input, setInput] = useState<string>('');
 
     const click = (id: string) => {
-        router.push('/todo/'+id)
+        router.push('/'+id)
     }
 
     const inputChanged = (input: string) => {

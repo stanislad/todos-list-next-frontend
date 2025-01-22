@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
       onSuccess: ()=>{
         queryClient.invalidateQueries({queryKey: ['todos']})
         queryClient.invalidateQueries({queryKey: ['todo']})
-        router.push('/todo/')
+        router.push('/')
       }
     })
   }
@@ -42,7 +42,7 @@ export const CreateMutation = () =>{
       mutationFn: ({name, description} : {name: string, description: string})=>createTodo(name, description),
       onSuccess: ()=>{
         queryClient.invalidateQueries({queryKey: ['todos']})
-        router.push('/todo/')
+        router.push('/')
       }
     })
   }
@@ -66,7 +66,7 @@ export const DeleteMutation = () =>{
     mutationFn: ({id} : {id: string})=>deleteTodo(id),
     onSuccess: ()=>{
       queryClient.invalidateQueries({queryKey: ['todos']})
-      router.push('/todo/')
+      router.push('/')
     }
   })
 }
