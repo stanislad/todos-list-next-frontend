@@ -17,6 +17,7 @@ export const Form = (params: Props) => {
     const [name, setName] = useState<string>(params.todo.todo)
     const [description, setDescription] = useState<string>(params.todo.description)
     const [dateTimeDb, setDateTimeDb] = useState<string>(params.todo.dateTimeDb || new Date().toISOString().substring(0,16))
+    const [dateEnabled, setDateEnabled] = useState<boolean>(true);
     const {mutate : imageUploadMutation} = ImageUploadMutation()
     const router = useRouter();
 
@@ -42,7 +43,7 @@ export const Form = (params: Props) => {
 
     const callback = (e: any) => {
         e.preventDefault()
-        params.callback(name, description, dateTimeDb)
+        params.callback(name, description, dateEnabled ? dateTimeDb : null)
     }
 
     const callbackDelete = (e: any) => {
@@ -87,6 +88,25 @@ export const Form = (params: Props) => {
         )
     }
 
+    const datePicker = () => {
+      if(dateEnabled)
+        return (
+          <div>
+            <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 pt-6">
+              Date:
+            </label>
+            <div className="mt-2">
+              <input
+                type="datetime-local"
+                value={dateTimeDb}
+                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                onChange={e=>setDateTimeDb(e.target.value)}
+              />
+            </div>
+          </div>
+        )
+    }
+
     return (
         <div>
         <form>
@@ -110,7 +130,7 @@ export const Form = (params: Props) => {
                   value={name}
                   onChange={e=>setName(e.target.value)}
                 />
-              </div>
+              </div>   
               <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 pt-6">
                 Description:
               </label>
@@ -123,19 +143,16 @@ export const Form = (params: Props) => {
                   onChange={e=>setDescription(e.target.value)}
                 />
               </div>
+
               {renderImage()}
-              {uploadImageButton()}
-              <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 pt-6">
-                Date:
+              {uploadImageButton()}                       
+    
+              <label htmlFor="checkbox" className="block text-sm/6 font-medium text-gray-900 pt-6">
+                Date Enabled:
               </label>
-              <div className="mt-2">
-                <input
-                  type="datetime-local"
-                  value={dateTimeDb}
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  onChange={e=>setDateTimeDb(e.target.value)}
-                />
-              </div>        
+              <input className="accent-purple-500/25" type="checkbox" name="checkbox" checked={dateEnabled} onChange={()=>setDateEnabled(!dateEnabled)}/>    
+
+              {datePicker()}    
             </div>
           </div>
         </div>

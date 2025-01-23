@@ -4,6 +4,7 @@ import { convertDate, dateDiff } from "@/app/helper/dateConvert";
 import { Checkbox } from "@/app/components/Checkbox";
 import { SearchField } from "./SearchField";
 import { useState } from "react";
+import { sortByDate } from "../helper/sorting";
 
 interface Props{
     items: Todos[]
@@ -25,9 +26,7 @@ export const List = (children : Props) =>{
         return field.toUpperCase().includes(input.toUpperCase())
     }
 
-    const sortedList = children.items.sort((a, b) => (new Date(a?.dateTimeDb) as any) - (new Date(b?.dateTimeDb) as any))
-
-    const mappedList = sortedList.map((item: Todos, i: number) => {
+        const mappedList = sortByDate(children.items).map((item: Todos, i: number) => {
 
         const opacity = item.completed ? 'opacity-70' : 'opacity-100';
         const strikeOutText = item.completed ? 'text-decoration-line: line-through' : '';
