@@ -18,8 +18,8 @@ export default function Page ({ params } : { params: Promise<{ id: string }> }) 
         }
       }, [id, refetch]);
 
-    const saveTodo = (name: string, description: string, dateTime: string) => {
-        updateMutate({id, name, description, dateTime})
+    const saveTodo = (name: string, description: string, dateTimeDb: string) => {
+        updateMutate({id, name, description, dateTimeDb})
     }
 
     const deleteTodo = () => {

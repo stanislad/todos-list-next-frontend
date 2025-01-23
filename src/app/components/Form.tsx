@@ -7,7 +7,7 @@ import { ImageUploadMutation } from "../query/mutations";
 
 interface Props{
   todo: Todos
-  callback: (name : string, description : string, dateTime: string)=>void;
+  callback: (name : string, description : string, dateTimeDb: string)=>void;
   callbackDelete?: ()=>void;
   editMode?: boolean;
   createMode?: boolean;
@@ -16,7 +16,7 @@ interface Props{
 export const Form = (params: Props) => {
     const [name, setName] = useState<string>(params.todo.todo)
     const [description, setDescription] = useState<string>(params.todo.description)
-    const [dateTime, setDateTime] = useState<string>(params.todo.dateTime || new Date().toISOString().substring(0,16))
+    const [dateTimeDb, setDateTimeDb] = useState<string>(params.todo.dateTimeDb || new Date().toISOString().substring(0,16))
     const {mutate : imageUploadMutation} = ImageUploadMutation()
     const router = useRouter();
 
@@ -42,7 +42,7 @@ export const Form = (params: Props) => {
 
     const callback = (e: any) => {
         e.preventDefault()
-        params.callback(name, description, dateTime)
+        params.callback(name, description, dateTimeDb)
     }
 
     const callbackDelete = (e: any) => {
@@ -131,9 +131,9 @@ export const Form = (params: Props) => {
               <div className="mt-2">
                 <input
                   type="datetime-local"
-                  value={dateTime}
+                  value={dateTimeDb}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  onChange={e=>setDateTime(e.target.value)}
+                  onChange={e=>setDateTimeDb(e.target.value)}
                 />
               </div>        
             </div>

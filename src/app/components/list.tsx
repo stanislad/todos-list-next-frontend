@@ -25,7 +25,7 @@ export const List = (children : Props) =>{
         return field.toUpperCase().includes(input.toUpperCase())
     }
 
-    const sortedList = children.items.sort((a, b) => (new Date(a?.dateTime) as any) - (new Date(b?.dateTime) as any))
+    const sortedList = children.items.sort((a, b) => (new Date(a?.dateTimeDb) as any) - (new Date(b?.dateTimeDb) as any))
 
     const mappedList = sortedList.map((item: Todos, i: number) => {
 
@@ -50,7 +50,7 @@ export const List = (children : Props) =>{
             
             <div className=" sm:flex sm:flex-col sm:items-end pt-6 relative end-4">
                 <div className="flex">
-                    <p className="text-xs md:text-sm/6 text-gray-900">{item.dateTime ? dateDiff(item.dateTime) : ''}</p>
+                    <p className="text-xs md:text-sm/6 text-gray-900">{item.dateTimeDb ? dateDiff(item.dateTimeDb) : ''}</p>
                     <div className="hidden sm:block pl-2 pt-0.5">
                         <img src="bell.png" width={18} />
                     </div>

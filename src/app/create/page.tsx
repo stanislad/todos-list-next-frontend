@@ -8,8 +8,8 @@ export default function Page () {
     const {mutate: createMutation} = CreateMutation()
 
 
-    const saveTodo = (name: string, description: string, dateTime: string) => {
-        createMutation({name, description, dateTime})
+    const saveTodo = (name: string, description: string, dateTimeDb: string) => {
+        createMutation({name, description, dateTimeDb})
     }
 
     return (

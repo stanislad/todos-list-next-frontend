@@ -4,7 +4,7 @@ export interface Todos {
     createdAt : string,
     completed : boolean,
     description : string,
-    dateTime: string,
+    dateTimeDb: string,
     imageUrl : string
 }
 
@@ -14,6 +14,6 @@ export const emptyTodo : Todos = {
     description: "",
     imageUrl: "",
     createdAt: "",
-    dateTime: "",
+    dateTimeDb: "",
     completed: false,
 }
