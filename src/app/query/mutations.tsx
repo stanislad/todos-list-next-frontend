@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
     const queryClient = useQueryClient();
 
     return useMutation({
-      mutationFn: ({id, name, description} : {id : string, name: string, description: string})=>updateTodo(id, name, description),
+      mutationFn: ({id, name, description, dateTime} : {id : string, name: string, description: string, dateTime: string})=>updateTodo(id, name, description, dateTime),
       onSuccess: ()=>{
         queryClient.invalidateQueries({queryKey: ['todos']})
         queryClient.invalidateQueries({queryKey: ['todo']})
@@ -23,9 +23,9 @@ import { useRouter } from 'next/navigation';
     })
   }
 
-export const updateTodo = (id : string, name: string, description: string) => fetch(API_URL+'update/'+id, {
+export const updateTodo = (id : string, name: string, description: string, dateTime: string) => fetch(API_URL+'update/'+id, {
     mode: 'cors',
-    body: JSON.stringify({todo: name, description}),
+    body: JSON.stringify({todo: name, description, dateTime}),
     headers: {
         'Content-Type': 'application/json'
     },
@@ -39,7 +39,7 @@ export const CreateMutation = () =>{
     const queryClient = useQueryClient();
 
     return useMutation({
-      mutationFn: ({name, description} : {name: string, description: string})=>createTodo(name, description),
+      mutationFn: ({name, description, dateTime} : {name: string, description: string, dateTime: string})=>createTodo(name, description, dateTime),
       onSuccess: ()=>{
         queryClient.invalidateQueries({queryKey: ['todos']})
         router.push('/')
@@ -47,9 +47,9 @@ export const CreateMutation = () =>{
     })
   }
 
-const createTodo = (name: string, description: string) => fetch(API_URL+'create/', {
+const createTodo = (name: string, description: string, dateTime: string) => fetch(API_URL+'create/', {
     mode: 'cors',
-    body: JSON.stringify({todo: name, description}),
+    body: JSON.stringify({todo: name, description, dateTime}),
     headers: {
         'Content-Type': 'application/json'
     },

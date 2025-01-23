@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation"
 import type {Todos} from '../../types/types'
-import { convertDate } from "@/app/helper/dateConvert";
+import { convertDate, dateDiff } from "@/app/helper/dateConvert";
 import { Checkbox } from "@/app/components/Checkbox";
 import { SearchField } from "./SearchField";
 import { useState } from "react";
@@ -25,14 +25,16 @@ export const List = (children : Props) =>{
         return field.toUpperCase().includes(input.toUpperCase())
     }
 
-    const mappedList = children.items.map((item: Todos, i: number) => {
+    const sortedList = children.items.sort((a, b) => (new Date(a?.dateTime) as any) - (new Date(b?.dateTime) as any))
+
+    const mappedList = sortedList.map((item: Todos, i: number) => {
 
         const opacity = item.completed ? 'opacity-70' : 'opacity-100';
         const strikeOutText = item.completed ? 'text-decoration-line: line-through' : '';
 
         if(strComp(item.todo) || strComp(item.description))
         return (
-            <li onClick={()=>click(item.id)} key={i} className={`flex justify-between gap-x-6 py-5 cursor-pointer ${opacity}`}>
+            <li onClick={()=>click(item.id)} key={i} className={`flex justify-between gap-x-6 py-3 md:py-5 cursor-pointer ${opacity}`}>
             
             <div className="flex min-w-0 gap-x-4">
                 <Checkbox id={item.id} completed={item.completed}/>
@@ -46,8 +48,14 @@ export const List = (children : Props) =>{
                 </div>
             </div>
             
-            <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                <p className="text-sm/6 text-gray-900">{convertDate(item.createdAt.toString())}</p>
+            <div className=" sm:flex sm:flex-col sm:items-end pt-6 relative end-4">
+                <div className="flex">
+                    <p className="text-xs md:text-sm/6 text-gray-900">{item.dateTime ? dateDiff(item.dateTime) : ''}</p>
+                    <div className="hidden sm:block pl-2 pt-0.5">
+                        <img src="bell.png" width={18} />
+                    </div>
+                    
+                </div>
             </div>
         </li>
         )

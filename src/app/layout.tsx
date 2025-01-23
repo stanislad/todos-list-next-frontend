@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-r from-violet-200 to-pink-200`}
       >
         <Providers>
-          <div className="lg:flex lg:items-center lg:justify-between p-5 md:p-10">
+          <div className="lg:flex lg:items-center lg:justify-between p-2 md:p-10">
             <div className="min-w-0 flex-1">
               {children}
             </div>  

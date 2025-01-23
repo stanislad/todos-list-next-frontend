@@ -7,7 +7,7 @@ import { ImageUploadMutation } from "../query/mutations";
 
 interface Props{
   todo: Todos
-  callback: (name : string, description : string)=>void;
+  callback: (name : string, description : string, dateTime: string)=>void;
   callbackDelete?: ()=>void;
   editMode?: boolean;
   createMode?: boolean;
@@ -16,7 +16,7 @@ interface Props{
 export const Form = (params: Props) => {
     const [name, setName] = useState<string>(params.todo.todo)
     const [description, setDescription] = useState<string>(params.todo.description)
-    const [date, setDate] = useState<string>(new Date().toISOString().substring(0,16))
+    const [dateTime, setDateTime] = useState<string>(params.todo.dateTime || new Date().toISOString().substring(0,16))
     const {mutate : imageUploadMutation} = ImageUploadMutation()
     const router = useRouter();
 
@@ -42,7 +42,7 @@ export const Form = (params: Props) => {
 
     const callback = (e: any) => {
         e.preventDefault()
-        params.callback(name, description)
+        params.callback(name, description, dateTime)
     }
 
     const callbackDelete = (e: any) => {
@@ -131,9 +131,9 @@ export const Form = (params: Props) => {
               <div className="mt-2">
                 <input
                   type="datetime-local"
-                  value={date}
+                  value={dateTime}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  onChange={e=>setDate(e.target.value)}
+                  onChange={e=>setDateTime(e.target.value)}
                 />
               </div>        
             </div>
@@ -142,10 +142,10 @@ export const Form = (params: Props) => {
         </div>
         
         <div className="mt-6 flex items-center justify-between gap-x-8">
-        {deleteButton()}
         <button onClick={()=>router.back()} type="button" className="text-sm/6 font-semibold text-gray-900">
           Cancel
         </button>
+        {deleteButton()}
         <button 
           onClick={e=>callback(e)}
           type="submit"
