@@ -15,7 +15,7 @@ export const convertDate = (isoString: string) => {
     return formattedDate;
 }
 
-export const dateDiff = (isoString: string) => {
+export const dateDiff = (isoString: string): {date: string, style: string} => {
 
     // Convert to a Date object
     const date: any = new Date(isoString);
@@ -27,12 +27,19 @@ export const dateDiff = (isoString: string) => {
     if(Math.sign(hours) === 1) {
         return outputTimeLeft(hours)
     }
-    else return 'Due'
+    
+    else return {date: 'Due', style: 'text-red-500'}
 }
 
-const outputTimeLeft = (hours : number) => {
+const outputTimeLeft = (hours : number) : {date: string, style: string} => {
     const hoursFormatted = Math.floor(hours)
-    if(hoursFormatted === 0) return `${Math.floor(hours * 60)} minutes`;
-    if(hoursFormatted > 23) return `${Math.floor(hours / 24)} day${Math.floor(hours / 24) > 1 ? 's' : ''}`;
-    else return hoursFormatted.toString() + ' hours'
+    if(hoursFormatted === 0) return {
+        date: `${Math.floor(hours * 60)} minutes`, style:'text-orange-500'
+    };
+    if(hoursFormatted > 23) return {
+        date: `${Math.floor(hours / 24)} day${Math.floor(hours / 24) > 1 ? 's' : ''}`, style:'text-green-500'
+    };
+    else return {
+        date: hoursFormatted.toString() + ' hours', style:'text-amber-500'
+    };
 }
