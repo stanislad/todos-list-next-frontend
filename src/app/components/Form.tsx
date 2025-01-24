@@ -17,7 +17,7 @@ export const Form = (params: Props) => {
     const [name, setName] = useState<string>(params.todo.todo)
     const [description, setDescription] = useState<string>(params.todo.description)
     const [dateTimeDb, setDateTimeDb] = useState<string>(params.todo.dateTimeDb || new Date().toISOString().substring(0,16))
-    const [dateEnabled, setDateEnabled] = useState<boolean>(true);
+    const [dateEnabled, setDateEnabled] = useState<boolean>(!!params.todo.dateTimeDb);
     const {mutate : imageUploadMutation} = ImageUploadMutation()
     const router = useRouter();
 
@@ -43,7 +43,7 @@ export const Form = (params: Props) => {
 
     const callback = (e: any) => {
         e.preventDefault()
-        params.callback(name, description, dateEnabled ? dateTimeDb : null)
+        params.callback(name, description, dateEnabled ? dateTimeDb : "")
     }
 
     const callbackDelete = (e: any) => {
