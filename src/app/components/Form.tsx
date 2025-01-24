@@ -18,6 +18,7 @@ export const Form = (params: Props) => {
     const [description, setDescription] = useState<string>(params.todo.description)
     const [dateTimeDb, setDateTimeDb] = useState<string>(params.todo.dateTimeDb || new Date().toISOString().substring(0,16))
     const [dateEnabled, setDateEnabled] = useState<boolean>(!!params.todo.dateTimeDb);
+    const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
     const {mutate : imageUploadMutation} = ImageUploadMutation()
     const router = useRouter();
 
@@ -67,11 +68,18 @@ export const Form = (params: Props) => {
 
     const deleteButton = () =>{
       if(params.editMode)
-        return (
-          <button onClick={e=>callbackDelete(e)} type="button" className="text-sm/6 font-semibold text-red-600">
-            Delete
-          </button>
-        )
+        if(!confirmDelete)
+          return (
+              <button onClick={()=>setConfirmDelete(true)} type="button" className="text-sm/6 font-semibold text-red-600">
+                Delete
+              </button>
+          )
+        else
+          return (
+              <button onClick={e=>callbackDelete(e)} type="button" className="text-sm/6 font-semibold text-red-600">
+                Confirm Delete?
+              </button>
+          )
     }
 
     const uploadImageButton = () =>{
