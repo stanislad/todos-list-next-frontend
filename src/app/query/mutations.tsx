@@ -6,6 +6,32 @@ import {
     } from '@tanstack/react-query';
 import { API_URL } from './queries';
 import { useRouter } from 'next/navigation';
+import { Login } from '@/types/types';
+
+//LOGIN
+
+export const LoginMutation = () => {
+  const router = useRouter()
+
+  return useMutation({
+      mutationFn: ({email, password} : Login)=>loginQuery({email, password}),
+      onSuccess: (res : {message: string})=>{
+        console.log(res)
+
+        if(res && res.message && res.message === 'user authorised')
+          router.push('/')
+        else alert('Wrong Email/Password combination')
+      }
+  })
+}
+const loginQuery = ({email, password} : Login) => fetch(API_URL+'login/', {
+  mode: 'cors',
+  method: 'post',
+  body: JSON.stringify({email, password}),
+  headers: {
+  'Content-Type': 'application/json'
+  }
+}).then(data=>data.json())
 
 //UPDATE
 

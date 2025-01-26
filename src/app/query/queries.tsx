@@ -1,8 +1,11 @@
 'use client'
 
+import { Login } from '@/types/types'
 import { useQuery } from '@tanstack/react-query'
 
 export const API_URL = 'https://hfyi00ou55.execute-api.eu-west-1.amazonaws.com/dev/'
+
+// FETCH ALL ITEMS
 
 export const FetchTodosQuery = () => {
     return useQuery({
@@ -17,6 +20,8 @@ const fetchTodos = () => fetch(API_URL, {
     }
 }).then(data=>data.json())
 
+
+// FETCH ITEM
 
 export const FetchTodoQuery = (id: string) => {
     return useQuery({

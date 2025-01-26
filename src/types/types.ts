@@ -1,11 +1,11 @@
 export interface Todos {
-    id: string,
-    todo: string,
-    createdAt : string,
-    completed : boolean,
-    description : string,
-    dateTimeDb: string,
-    imageUrl : string
+    id: string;
+    todo: string;
+    createdAt : string;
+    completed : boolean;
+    description : string;
+    dateTimeDb: string;
+    imageUrl : string;
 }
 
 export const emptyTodo : Todos = {
@@ -16,4 +16,9 @@ export const emptyTodo : Todos = {
     createdAt: "",
     dateTimeDb: "",
     completed: false,
+}
+
+export interface Login {
+    email: string;
+    password: string;
 }
