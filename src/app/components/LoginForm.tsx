@@ -10,7 +10,7 @@ export const LoginForm = () => {
 
     const {mutateAsync} = LoginMutation()
 
-    const submit = (e : Event) => {
+    const submit = (e : any) => {
         e.preventDefault();
         mutateAsync({email, password})
     }
