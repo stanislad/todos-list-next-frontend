@@ -8,6 +8,32 @@ import { API_URL } from './queries';
 import { useRouter } from 'next/navigation';
 import { Login } from '@/types/types';
 
+//REGISTER
+
+export const RegisterMutation = () => {
+  const router = useRouter()
+
+  return useMutation({
+      mutationFn: ({email, password} : Login)=>registerQuery({email, password}),
+      onSuccess: (res : {info: string})=>{
+        if(res && res.info){
+          if(res.info === 'email already used'){
+            alert('email already used')
+          } 
+          else router.push('login');
+        } else alert('Login Error');
+      }
+  })
+}
+const registerQuery = ({email, password} : Login) => fetch(API_URL+'register/', {
+  mode: 'cors',
+  method: 'post',
+  body: JSON.stringify({email, password}),
+  headers: {
+  'Content-Type': 'application/json'
+  }
+}).then(data=>data.json())
+
 //LOGIN
 
 export const LoginMutation = () => {
@@ -15,12 +41,15 @@ export const LoginMutation = () => {
 
   return useMutation({
       mutationFn: ({email, password} : Login)=>loginQuery({email, password}),
-      onSuccess: (res : {message: string})=>{
-        console.log(res)
+      onSuccess: (res : {info: string, userId: string})=>{
 
-        if(res && res.message && res.message === 'user authorised')
-          router.push('/')
-        else alert('Wrong Email/Password combination')
+        if(res && res.info && res.userId){
+          if(res.info === 'user authorised'){
+            localStorage.setItem('userId', res.userId)
+            router.push('/')
+          } 
+          else alert('Wrong Email/Password combination');
+        } else alert('Login Error')
       }
   })
 }

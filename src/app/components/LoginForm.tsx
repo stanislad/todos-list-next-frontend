@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { LoginMutation } from "../query/mutations"
+import { useRouter } from "next/navigation"
 
 
 export const LoginForm = () => {
+    const router = useRouter();
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
@@ -20,8 +22,8 @@ export const LoginForm = () => {
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
                 alt="Your Company"
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                className="mx-auto h-10 w-auto"
+                src="./to-do-list.png"
+                className="mx-auto h-14 w-auto"
             />
             <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
                 Sign in to your account
@@ -86,7 +88,7 @@ export const LoginForm = () => {
 
             <p className="mt-10 text-center text-sm/6 text-gray-500">
                 Not a member?{' '}
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                <a onClick={() => router.push('registration')} href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                 Register Here
                 </a>
             </p>
