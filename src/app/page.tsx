@@ -6,11 +6,14 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { FetchTodosQuery } from "./query/queries"
 import { Button } from "./components/Button"
+import { CheckSessionLogin, signOut } from "./helper/sessionManager"
 
 export default function Page () {
     const [results, setResults] = useState<Todos[] | undefined>([])
     const {data, isFetched} = FetchTodosQuery()
     const router = useRouter()
+
+    CheckSessionLogin(router, true);
 
     const click = ()=>{
         router.push('create')
@@ -25,6 +28,7 @@ export default function Page () {
     return (
         <div>
             <h2 className="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Todo List Items:</h2>
+                <Button buttonText="Sign Out" callback={()=>signOut(router)} position="float-right mt-6 md:mt-4"></Button>
                 <Button buttonText="Create Todo" callback={click} position="float-right mt-6 md:mt-4"></Button>
             <List items={results as Todos[]}></List>
         </div>
