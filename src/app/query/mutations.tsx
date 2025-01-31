@@ -47,6 +47,7 @@ export const LoginMutation = () => {
       mutationFn: ({email, password} : Login)=>loginQuery({email, password}),
       onMutate: ()=>setSpinner(true),
       onSuccess: (res : {info: string, userId: string})=>{
+        setSpinner(false)
 
         if(res && res.info && res.userId){
           if(res.info === 'user authorised'){
@@ -54,7 +55,6 @@ export const LoginMutation = () => {
             queryClient.invalidateQueries({queryKey: ['todos']})
             queryClient.invalidateQueries({queryKey: ['todo']})
             router.push('/')
-            setSpinner(false)
           } 
           else alert('Wrong Email/Password combination');
         } else alert('Login Error')
