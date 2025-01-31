@@ -3,27 +3,38 @@ import { useEffect } from "react"
 
 export const CheckSessionLogin = (router: AppRouterInstance, signedIn = false) => {
 
+    const userId = getUserId()
+
     const checkSessionSignedIn = () => {
-        if(!localStorage.getItem('userId')) router.push('login')
+        if(!userId) router.push('login')
     }
 
     const checkSessionSignedOut = () => { 
-        if(localStorage.getItem('userId')) router.push('/')
+        if(userId) router.push('/')
     }
 
     const sessionFunction = signedIn ? checkSessionSignedIn : checkSessionSignedOut;
     
     useEffect(() => {
-        sessionFunction()
-        const interval = setInterval(()=>{
+        if(getUserId()){
             sessionFunction()
-        }, 2000)
-
-        return () => clearInterval(interval);
+            const interval = setInterval(()=>{
+                sessionFunction()
+            }, 2000)
+    
+            return () => clearInterval(interval);
+        }
     },[])
 }
 
 export const signOut = (router: AppRouterInstance)=>{
     localStorage.clear()
     router.push('login')
+}
+
+export const getUserId = () => {
+    if (typeof window !== 'undefined')
+        return localStorage?.getItem("userId") ?? null;
+    else 
+        return null
 }

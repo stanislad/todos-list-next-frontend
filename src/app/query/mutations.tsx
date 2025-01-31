@@ -7,6 +7,8 @@ import {
 import { API_URL } from './queries';
 import { useRouter } from 'next/navigation';
 import { Login } from '@/types/types';
+import { getUserId } from '../helper/sessionManager';
+import { useSpinnerStore } from '../components/LoadingSpinner';
 
 //REGISTER
 
@@ -38,15 +40,21 @@ const registerQuery = ({email, password} : Login) => fetch(API_URL+'register/', 
 
 export const LoginMutation = () => {
   const router = useRouter()
+  const queryClient = useQueryClient();
+  const setSpinner = useSpinnerStore((state) => state.setSpinner);
 
   return useMutation({
       mutationFn: ({email, password} : Login)=>loginQuery({email, password}),
+      onMutate: ()=>setSpinner(true),
       onSuccess: (res : {info: string, userId: string})=>{
 
         if(res && res.info && res.userId){
           if(res.info === 'user authorised'){
             localStorage.setItem('userId', res.userId)
+            queryClient.invalidateQueries({queryKey: ['todos']})
+            queryClient.invalidateQueries({queryKey: ['todo']})
             router.push('/')
+            setSpinner(false)
           } 
           else alert('Wrong Email/Password combination');
         } else alert('Login Error')
@@ -67,13 +75,16 @@ const loginQuery = ({email, password} : Login) => fetch(API_URL+'login/', {
   export const UpdateMutation = () =>{
     const router = useRouter()
     const queryClient = useQueryClient();
+    const setSpinner = useSpinnerStore((state) => state.setSpinner);
 
     return useMutation({
       mutationFn: ({id, name, description, dateTimeDb} : {id : string, name: string, description: string, dateTimeDb: string})=>updateTodo(id, name, description, dateTimeDb),
+      onMutate: ()=>setSpinner(true),
       onSuccess: ()=>{
         queryClient.invalidateQueries({queryKey: ['todos']})
         queryClient.invalidateQueries({queryKey: ['todo']})
         router.push('/')
+        setSpinner(false)
       }
     })
   }
@@ -92,19 +103,22 @@ export const updateTodo = (id : string, name: string, description: string, dateT
 export const CreateMutation = () =>{
     const router = useRouter()
     const queryClient = useQueryClient();
+    const setSpinner = useSpinnerStore((state) => state.setSpinner);
 
     return useMutation({
       mutationFn: ({name, description, dateTimeDb} : {name: string, description: string, dateTimeDb: string})=>createTodo(name, description, dateTimeDb),
+      onMutate: ()=>setSpinner(true),
       onSuccess: ()=>{
         queryClient.invalidateQueries({queryKey: ['todos']})
         router.push('/')
+        setSpinner(false)
       }
     })
   }
 
 const createTodo = (name: string, description: string, dateTimeDb: string) => fetch(API_URL+'create/', {
     mode: 'cors',
-    body: JSON.stringify({todo: name, description, dateTimeDb}),
+    body: JSON.stringify({todo: name, description, dateTimeDb, userId: getUserId()}),
     headers: {
         'Content-Type': 'application/json'
     },
@@ -116,12 +130,15 @@ const createTodo = (name: string, description: string, dateTimeDb: string) => fe
 export const DeleteMutation = () =>{
   const router = useRouter()
   const queryClient = useQueryClient();
+  const setSpinner = useSpinnerStore((state) => state.setSpinner);
 
   return useMutation({
     mutationFn: ({id} : {id: string})=>deleteTodo(id),
+    onMutate: ()=>setSpinner(true),
     onSuccess: ()=>{
       queryClient.invalidateQueries({queryKey: ['todos']})
       router.push('/')
+      setSpinner(false)
     }
   })
 }
@@ -139,11 +156,14 @@ const deleteTodo = (id: string) => fetch(API_URL+'delete/'+id, {
 
 export const CompleteMutation = () =>{
   const queryClient = useQueryClient();
+  const setSpinner = useSpinnerStore((state) => state.setSpinner);
 
   return useMutation({
     mutationFn: ({id, completed} : {id: string, completed: boolean})=>completeTodo(id, completed),
+    onMutate: ()=>setSpinner(true),
     onSuccess: ()=>{
       queryClient.invalidateQueries({queryKey: ['todos']})
+      setSpinner(false)
     }
   })
 }

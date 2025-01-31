@@ -7,12 +7,14 @@ import { Todos } from "@/types/types"
 import { use, useEffect } from "react"
 import { CheckSessionLogin } from "../helper/sessionManager"
 import { useRouter } from "next/navigation"
+import { useSpinnerStore } from "../components/LoadingSpinner"
 
 export default function Page ({ params } : { params: Promise<{ id: string }> }) {
     const { id } = use(params);
     const {data, isLoading, refetch} = FetchTodoQuery(id)
     const {mutate : updateMutate} = UpdateMutation()
     const {mutate : deleteMutate} = DeleteMutation()
+    const setSpinner = useSpinnerStore((state) => state.setSpinner);
 
     CheckSessionLogin(useRouter(), true);
 
@@ -30,7 +32,12 @@ export default function Page ({ params } : { params: Promise<{ id: string }> }) 
         deleteMutate({id})
     }
 
-    if (isLoading || !data) return <div>Loading...</div>
+    if (isLoading || !data) {
+        setSpinner(true)
+        return;
+    }
+
+    setSpinner(false)
 
     return (
         <div>

@@ -2,6 +2,7 @@
 
 import { Login } from '@/types/types'
 import { useQuery } from '@tanstack/react-query'
+import { getUserId } from '../helper/sessionManager'
 
 export const API_URL = 'https://hfyi00ou55.execute-api.eu-west-1.amazonaws.com/dev/'
 
@@ -13,7 +14,7 @@ export const FetchTodosQuery = () => {
         queryFn: fetchTodos
     })
 }
-const fetchTodos = () => fetch(API_URL, {
+const fetchTodos = () => fetch(API_URL+'todos/'+getUserId(), {
     mode: 'cors',
     headers: {
     'Content-Type': 'application/json'
@@ -30,7 +31,7 @@ export const FetchTodoQuery = (id: string) => {
         enabled: !!id, // Only fetch if `id` is defined
     })
 }
-export const fetchTodo = (id : string) => fetch(API_URL+id, {
+export const fetchTodo = (id : string) => fetch(API_URL+'todo/'+id, {
     mode: 'cors',
     headers: {
     'Content-Type': 'application/json'
