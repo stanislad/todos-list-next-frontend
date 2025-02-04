@@ -46,7 +46,7 @@ export const LoginMutation = () => {
   return useMutation({
       mutationFn: ({email, password} : Login)=>loginQuery({email, password}),
       onMutate: ()=>setSpinner(true),
-      onSuccess: (res : {info: string, userId: string})=>{
+      onSuccess: (res : {info: string, userId: string, message: string})=>{
         setSpinner(false)
 
         if(res && res.info && res.userId){
@@ -57,7 +57,7 @@ export const LoginMutation = () => {
             router.push('/')
           } 
           else alert('Wrong Email/Password combination');
-        } else alert('Login Error')
+        } else alert(res.message)
       }
   })
 }
